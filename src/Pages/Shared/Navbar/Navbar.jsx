@@ -11,7 +11,7 @@ const Navbar = () => {
             .then()
             .catch()
     }
-    console.log(cart);
+    // console.log(cart);
 
     const navbar = <>
         <li><Link to={'/'}>HOME</Link></li>
@@ -21,7 +21,7 @@ const Navbar = () => {
         <li><Link to={'/order/salad'}>ORDER FOOD</Link></li>
         <li><Link to="/dashboard/cart">
             <button className="btn btn-sm btn-outline btn-secondary text-2xl">
-               <FaCartPlus></FaCartPlus>
+                <FaCartPlus></FaCartPlus>
                 <div className="badge badge-secondary">+{cart.length}</div>
             </button>
         </Link></li>

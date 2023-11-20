@@ -1,57 +1,56 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../SocialLogin/SocialLogin";
 
 
 
 const Register = () => {
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const {registerUser, userUpdate} = useAuth();
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { registerUser, userUpdate } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = data => {
-        console.log(data);
         const email = data.email;
         const password = data.password;
         const photo = data.photo;
         const name = data.name;
         registerUser(email, password)
-        .then(result => {
-            console.log(result);
-            userUpdate(name, photo)
             .then(result => {
                 console.log(result);
-                // window.location.reload(false);
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Registration Successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/')
+                userUpdate(name, photo)
+                    .then(result => {
+                        console.log(result);
+                        // window.location.reload(false);
+                        const userInfo = { name, email }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+
+                                if (res.data.insertedId) {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Registration Successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/');
+                                }
+                            })
+                    })
+                    .catch(error => console.error(error));
             })
-            .catch(error => console.error(error))
-        })
-        .catch(error => console.error(error));
+            .catch(error => console.error(error));
     }
 
-    // const handleRegistration = e => {
-    //     e.preventDefault();
-    //     const form = new FormData(e.currentTarget);
-    //     const email = form.get('email');
-    //     const password = form.get('password');
-    //     const name = form.get('name');
-    //     const photo = form.get('photo');
-    //     console.log(photo, email, password, name);
-    //     const check = e.target.terms.checked
-    //     console.log(check);
-    // }
+   
     return (
         <div>
             <Helmet>
@@ -83,11 +82,11 @@ const Register = () => {
                                     <label className="label">
                                         <span className="label-text">Photo</span>
                                     </label>
-                                    <input type="text" 
-                                      {...register("photo", { required: true })}placeholder="Please provide a valid url"
+                                    <input type="text"
+                                        {...register("photo", { required: true })} placeholder="Please provide a valid url"
                                         name="photo"
-                                        className="input input-bordered pr-32 md:pr-48"  />
-                                         {errors.photo && <span className="text-red-600">PhotoURL is required</span>}
+                                        className="input input-bordered pr-32 md:pr-48" />
+                                    {errors.photo && <span className="text-red-600">PhotoURL is required</span>}
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
@@ -138,6 +137,7 @@ const Register = () => {
                                         className="btn  bg-teal-400 ">REGISTER</button>
                                 </div>
                             </form>
+                            <SocialLogin></SocialLogin>
                             <h2 className="text-md p-5">Already have an account? <Link to="/login"><span className="text-lg font-medium hover:underline text-teal-400">Login Here</span></Link></h2>
                         </div>
                     </div>

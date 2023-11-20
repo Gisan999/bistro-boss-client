@@ -1,4 +1,3 @@
-import { FaGoogle } from 'react-icons/fa'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
@@ -6,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 import useAuth from '../../Hooks/useAuth';
 import { useEffect, useState } from 'react';
+import SocialLogin from "../../SocialLogin/SocialLogin";
 const Login = () => {
     const { logIn } = useAuth();
     const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Login = () => {
     }
     return (
         <div>
-              <Helmet>
+            <Helmet>
                 <title>Bistro Boss | Login</title>
             </Helmet>
             <div className=" mx-auto">
@@ -76,7 +76,7 @@ const Login = () => {
                     </div>
 
                     <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto  md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
-flex items-center justify-center">
+                       flex items-center justify-center">
 
                         <div className="w-full h-100">
 
@@ -110,19 +110,17 @@ flex items-center justify-center">
                                 <div>
                                     {/* <label className="block text-gray-700">Email Address</label> */}
                                     <LoadCanvasTemplate />
-                                    <input onBlur={handleValidateCaptcha} type="text" name="captcha"  id="" placeholder="type the captcha above" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete="true" required />
+                                    <input onBlur={handleValidateCaptcha} type="text" name="captcha" id="" placeholder="type the captcha above" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete="true" required />
                                     {/* <button onClick={handleValidateCaptcha} className='btn btn-outline btn-primary btn-sm w-full mt-2'>validate</button> */}
                                 </div>
 
                                 <button disabled={disabled} type="submit" className="w-full  btn-outline btn btn-secondary   text-white  rounded-lg
-   mt-6">Log In</button>
+                           mt-6">Log In</button>
                             </form>
 
                             <hr className="my-6 border-gray-300 w-full" />
 
-                            <button className="btn btn-info btn-outline w-full">
-                                <FaGoogle></FaGoogle>
-                                Login with Google</button>
+                            <SocialLogin />
 
                             <p className="mt-8">Need an account?
 
