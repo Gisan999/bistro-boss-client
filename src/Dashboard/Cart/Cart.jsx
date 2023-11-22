@@ -3,6 +3,7 @@ import { MdDelete } from "react-icons/md";
 import useCart from "../../Hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
     const [cart, refetch] = useCart();
@@ -51,7 +52,9 @@ const Cart = () => {
                 <div className="flex justify-between">
                     <h2 className="text-4xl font-semibold uppercase">Total orders: {cart.length}</h2>
                     <h2 className="uppercase text-4xl font-semibold">Total Price: {totalPrice}</h2>
-                    <button className="btn bg-[#D1A054] text-white">pay</button>
+
+                    {cart.length ? <Link to="/dashboard/payment">  <button className="btn bg-[#D1A054] text-white">pay</button></Link> :
+                        <button disabled className="btn bg-[#D1A054] text-white">pay</button>}
                 </div>
 
                 <div className="overflow-x-auto">
@@ -84,7 +87,7 @@ const Cart = () => {
                                                     <img src={data.image} alt="Avatar Tailwind CSS Component" />
                                                 </div>
                                             </div>
-                                          
+
                                         </div>
                                     </td>
                                     <td>

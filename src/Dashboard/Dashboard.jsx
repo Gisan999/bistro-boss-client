@@ -50,8 +50,8 @@ const Dashboard = () => {
                                     </li>
                                     <li className="text-lg font-medium italic font-sans">
                                         <NavLink
-                                            to={"/dashboard/reservation"}>  <FaCalendar></FaCalendar>
-                                            Reservation
+                                            to={"/dashboard/history"}>  <FaCalendar></FaCalendar>
+                                           payment History
                                         </NavLink>
                                     </li>
                                     <li className="text-lg font-medium italic font-sans">
@@ -69,9 +69,9 @@ const Dashboard = () => {
                                     </li>
                                     <li className="text-lg font-medium italic font-sans">
                                         <NavLink
-                                            to={"/dashboard/bookings"}>
+                                            to={"/dashboard/paymentHistory"}>
                                             <FaList></FaList>
-                                            My Bookings
+                                            payment Real History
                                         </NavLink>
                                     </li>
                                 </>
